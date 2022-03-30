@@ -1,0 +1,80 @@
+plugins {
+    // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'com.jfrog.artifactory' version '4.27.1' apply false
+    id 'groovy'
+}
+apply plugin: 'com.jfrog.artifactory'
+
+group "gov.cms.ab2d.plugin"
+version "0.0.1-SNAPSHOT"
+
+ext {
+    artifactoryLoc = project.hasProperty('artifactory_contextUrl') ? project.artifactory_contextUrl
+            : System.getenv()['ARTIFACTORY_URL']
+    artifactory_user = project.hasProperty('artifactory_user') ? project.artifactory_user
+            : System.getenv()['ARTIFACTORY_USER']
+    artifactory_password = project.hasProperty('artifactory_password') ? project.artifactory_password
+            : System.getenv()['ARTIFACTORY_PASSWORD']
+
+    sourcesRepo = 'ab2d-maven-repo'
+    deployerRepo = 'ab2d-main'
+    resolverRepo = 'ab2d-main'
+
+
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        parentPlug {
+            id = 'gov.cms.ab2d.plugin'
+            implementationClass = 'gov.cms.ab2d.plugin.ParentPlugin'
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = "${artifactoryLoc}/${deployerRepo}"
+            credentials {
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+            }
+        }
+    }
+}
+
+artifactory {
+    contextUrl = project.artifactoryLoc
+
+    publish {
+        repository {
+            repoKey = "${deployerRepo}"
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
+            publishBuildInfo = false
+        }
+    }
+    resolve {
+        repository {
+            repoKey = "${resolverRepo}"
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+    }
+}
