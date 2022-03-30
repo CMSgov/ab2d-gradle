@@ -14,7 +14,7 @@ class ParentPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.allprojects {
             apply plugin: 'com.jfrog.artifactory'
-            apply plugin: 'java-library'
+//            apply plugin: 'java-library'
             apply plugin: 'maven-publish'
             apply plugin: 'checkstyle'
             apply plugin: 'jacoco'
@@ -64,11 +64,11 @@ class ParentPlugin implements Plugin<Project> {
 
                 afterTest { desc, result ->
                     if (result.resultType == TestResult.ResultType.FAILURE) {
-                        rootProject.ext.failedTests.add(desc)
+                        project.ext.failedTests.add(desc)
                     }
 
                     if (result.resultType == TestResult.ResultType.SKIPPED) {
-                        rootProject.ext.skippedTests.add(desc)
+                        project.ext.skippedTests.add(desc)
                     }
                 }
 
@@ -82,7 +82,7 @@ class ParentPlugin implements Plugin<Project> {
                             "failed ${result.failedTestCount}, " +
                             "skipped ${result.skippedTestCount}" +
                             ") "
-                    rootProject.ext.testSuites += summary
+                    project.ext.testSuites += summary
                 }
             }
 
@@ -156,6 +156,7 @@ class ParentPlugin implements Plugin<Project> {
                 testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
                 testImplementation "org.testcontainers:postgresql:$testContainerVersion"
                 testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
+//                testImplementation 'gov.cms.ab2d:common:0.0.1-SNAPSHOT'
                 implementation "org.projectlombok:lombok:$lombokVersion"
                 implementation(platform(annotationProcessor("org.projectlombok:lombok:$lombokVersion")))
                 annotationProcessor("org.projectlombok:lombok:$lombokVersion")
@@ -192,23 +193,23 @@ class ParentPlugin implements Plugin<Project> {
 
         project.getGradle().buildFinished {
 
-            if (!rootProject.ext.skippedTests.isEmpty()) {
+            if (!project.ext.skippedTests.isEmpty()) {
                 println "Skipped Tests: "
-                for (String skippedTestDesc : rootProject.ext.skippedTests) {
+                for (String skippedTestDesc : project.ext.skippedTests) {
                     println "\t" + skippedTestDesc
                 }
             }
 
-            if (!rootProject.ext.failedTests.isEmpty()) {
+            if (!project.ext.failedTests.isEmpty()) {
                 println "Failing Tests: "
-                for (String failedTestDesc : rootProject.ext.failedTests) {
+                for (String failedTestDesc : project.ext.failedTests) {
                     println "\t" + failedTestDesc
                 }
             }
 
-            if (!rootProject.ext.testSuites.isEmpty()) {
+            if (!project.ext.testSuites.isEmpty()) {
                 println "Test Suite Summary: "
-                println rootProject.ext.testSuites
+                println project.ext.testSuites
             }
         }
     }
