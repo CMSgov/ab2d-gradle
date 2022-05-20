@@ -14,7 +14,7 @@ class ParentPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.allprojects {
             apply plugin: 'com.jfrog.artifactory'
-//            apply plugin: 'java-library'
+            apply plugin: 'java-library'
             apply plugin: 'maven-publish'
             apply plugin: 'checkstyle'
             apply plugin: 'jacoco'
@@ -25,14 +25,14 @@ class ParentPlugin implements Plugin<Project> {
             targetCompatibility = 17
 
             project.ext {
-                artifactoryLoc = project.hasProperty('artifactory_contextUrl') ? project.artifactory_contextUrl
-                        : System.getenv()['ARTIFACTORY_URL']
+                artifactory_contextUrl = project.hasProperty('artifactory_contextUrl') ? project.artifactory_contextUrl
+                        : System.getenv().get("ARTIFACTORY_URL")
 
                 // Override user and password
                 artifactory_user = project.hasProperty('artifactory_user') ? project.artifactory_user
-                        : System.getenv()['ARTIFACTORY_USER']
+                        : System.getenv().get('ARTIFACTORY_USER')
                 artifactory_password = project.hasProperty('artifactory_password') ? project.artifactory_password
-                        : System.getenv()['ARTIFACTORY_PASSWORD']
+                        : System.getenv().get('ARTIFACTORY_PASSWORD')
 
                 sourcesRepo = 'ab2d-maven-repo'
                 deployerRepo = 'ab2d-main'
@@ -89,7 +89,7 @@ class ParentPlugin implements Plugin<Project> {
 
             project.repositories {
                 maven {
-                    url = "${artifactoryLoc}/${sourcesRepo}"
+                    url = "${artifactory_contextUrl}/${sourcesRepo}"
                     credentials {
                         username = project.artifactory_user
                         password = project.artifactory_password
@@ -106,7 +106,7 @@ class ParentPlugin implements Plugin<Project> {
             }
 
             project.artifactory {
-                contextUrl = project.artifactoryLoc
+                contextUrl = project.artifactory_contextUrl
 
                 publish {
                     repository {
@@ -137,7 +137,7 @@ class ParentPlugin implements Plugin<Project> {
                     if(project.name != 'ab2d-libs')
                     //Set path to repository that might exist if previous published on this version.
                     //Sets project name and if it exists in repository. Print out so jenkins can take it.
-                        System.out.print("'''"+project.name + ":" + urlExists("${artifactoryLoc}/${deployerRepo}/gov/cms/ab2d/${project.name}/${project.version}/${project.name}-${project.version}.jar"))
+                        System.out.print("'''"+project.name + ":" + urlExists("${artifactory_contextUrl}/${deployerRepo}/gov/cms/ab2d/${project.name}/${project.version}/${project.name}-${project.version}.jar"))
                 }
             }
 
@@ -147,7 +147,7 @@ class ParentPlugin implements Plugin<Project> {
             if (artifactory_password == null || artifactory_password.isEmpty()) {
                 println("Artifactory password not set");
             }
-            println("Artifactory loc? " + project.getProperty('artifactoryLoc'))
+            println("Artifactory loc? " + project.getProperty('artifactory_contextUrl'))
 
             println("Branch is " + gitBranch())
 
@@ -185,9 +185,8 @@ class ParentPlugin implements Plugin<Project> {
                 reportsDirectory = layout.buildDirectory.dir("$buildDir/reports/jacoco")
             }
 
-            project.checkstyle {
-                configFile file("$rootDir/config/checkstyle.xml")
-            }
+
+            project.checkstyle {}
 
         }
 
