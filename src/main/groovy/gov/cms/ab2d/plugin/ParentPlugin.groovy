@@ -164,8 +164,8 @@ class ParentPlugin implements Plugin<Project> {
 
             project.jar {
                 processResources.exclude('checkstyle.xml')
-                classifier "main".equalsIgnoreCase(gitBranch()) || "main".equalsIgnoreCase(System.getenv('BRANCH_NAME')) ? "" : "SNAPSHOT"
-                System.out.println("**** building branch - " + gitBranch() + ", classifier - " + classifier + " - CI branch - " + System.getenv('BRANCH_NAME'))
+                archiveClassifier = "main".equalsIgnoreCase(gitBranch()) || "main".equalsIgnoreCase(System.getenv('BRANCH_NAME')) ? "" : "SNAPSHOT"
+                System.out.println("**** building branch - " + gitBranch() + ", classifier - " + archiveClassifier + " - CI branch - " + System.getenv('BRANCH_NAME'))
             }
 
             project.test {
