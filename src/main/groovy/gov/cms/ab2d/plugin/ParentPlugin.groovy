@@ -156,7 +156,6 @@ class ParentPlugin implements Plugin<Project> {
                 testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
                 testImplementation "org.testcontainers:postgresql:$testContainerVersion"
                 testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
-//                testImplementation 'gov.cms.ab2d:common:0.0.1-SNAPSHOT'
                 implementation "org.projectlombok:lombok:$lombokVersion"
                 implementation(platform(annotationProcessor("org.projectlombok:lombok:$lombokVersion")))
                 annotationProcessor("org.projectlombok:lombok:$lombokVersion")
@@ -176,7 +175,7 @@ class ParentPlugin implements Plugin<Project> {
 
             project.jacocoTestReport {
                 reports {
-                    xml.enabled true
+                    xml.required = true
                 }
             }
 
