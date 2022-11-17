@@ -16,7 +16,6 @@ class ParentPlugin implements Plugin<Project> {
             apply plugin: 'com.jfrog.artifactory'
             apply plugin: 'java-library'
             apply plugin: 'maven-publish'
-            apply plugin: 'checkstyle'
             apply plugin: 'jacoco'
             group 'gov.cms.ab2d'
 
@@ -163,7 +162,6 @@ class ParentPlugin implements Plugin<Project> {
             }
 
             project.jar {
-                processResources.exclude('checkstyle.xml')
                 archiveClassifier = "main".equalsIgnoreCase(gitBranch()) || "main".equalsIgnoreCase(System.getenv('BRANCH_NAME')) ? "" : "SNAPSHOT"
                 System.out.println("**** building branch - " + gitBranch() + ", classifier - " + archiveClassifier + " - CI branch - " + System.getenv('BRANCH_NAME'))
             }
@@ -183,10 +181,6 @@ class ParentPlugin implements Plugin<Project> {
                 toolVersion = "0.8.7"
                 reportsDirectory = layout.buildDirectory.dir("$buildDir/reports/jacoco")
             }
-
-
-            project.checkstyle {}
-
         }
 
         project.getGradle().buildFinished {

@@ -8,7 +8,7 @@ plugins {
 apply plugin: 'com.jfrog.artifactory'
 
 group "gov.cms.ab2d.plugin"
-version "0.0.1-SNAPSHOT"
+version "1.0"
 
 sourceCompatibility = 17
 targetCompatibility = 17
