@@ -37,9 +37,9 @@ class ParentPlugin implements Plugin<Project> {
                 deployerRepo = 'ab2d-main'
                 resolverRepo = 'ab2d-main'
 
-                springBootVersion='2.6.3'
-                testContainerVersion='1.16.3'
-                lombokVersion = '1.18.22'
+                springBootVersion='2.7.6'
+                testContainerVersion='1.17.6'
+                lombokVersion = '1.18.24'
 
 
                 failedTests = []
