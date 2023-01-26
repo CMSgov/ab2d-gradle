@@ -26,3 +26,8 @@ plugins {
 
 apply plugin: 'gov.cms.ab2d.plugin'
 ```
+
+Currently, there are no scripts to deploy the plugin. Just use the local commands.
+```
+gradle publishPluginMavenPublicationToMavenRepository
+```
