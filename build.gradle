@@ -2,7 +2,7 @@ plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'groovy-gradle-plugin'
     id 'maven-publish'
-    id 'com.jfrog.artifactory' version '4.27.1' apply false
+    id 'com.jfrog.artifactory' version '4.31.6' apply false
     id 'groovy'
 }
 apply plugin: 'com.jfrog.artifactory'
