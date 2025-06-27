@@ -1,0 +1,71 @@
+{
+  "name": "ab2d-gradle",
+  "description": "This project creates a plugin that contains all standard gradle code/configs for ab2d projects.",
+  "longDescription": "This project creates a plugin that contains all standard gradle code/configs for ab2d projects.",
+  "status": "production",
+  "permissions": {
+    "licenses": [
+      {
+        "URL": "LICENSE",
+        "name": "CC0-1.0"
+      }
+    ],
+    "usageType": "openSource"
+  },
+  "organization": "Centers for Medicare & Medicaid Services",
+  "repositoryURL": "https://github.com/CMSGov/ab2d-gradle",
+  "repositoryHost": "github.com/CMSgov",
+  "repositoryVisibility": "public",
+  "vcs": "git",
+  "laborHours": null,
+  "reuseFrequency": {
+    "forks": 0
+  },
+  "platforms": [
+    "other"
+  ],
+  "categories": [
+    "healthcare"
+  ],
+  "softwareType": "standalone/backend",
+  "languages": [
+    "Groovy"
+  ],
+  "maintenance": "contract",
+  "contractNumber": "3",
+  "date": {
+    "created": "2022-03-30T12:32:31-07:00",
+    "lastModified": "2025-06-27T14:37:18+0000",
+    "metadataLastUpdated": "2025-06-27T14:37:18+0000"
+  },
+  "tags": [
+    "dsacms-tier3"
+  ],
+  "contact": {
+    "email": "opensource@cms.hhs.gov",
+    "name": "CMS Open Source Program Office"
+  },
+  "feedbackMechanisms": [
+    "https://github.com/CMSGov/ab2d-gradle/issues"
+  ],
+  "localisation": "false",
+  "repositoryType": "Package",
+  "userInput": "No",
+  "fismaLevel": "Low",
+  "group": "CMS",
+  "projects": [],
+  "systems": [],
+  "upstream": [],
+  "subsetInHealthcare": [
+    "Policy",
+    "Operational",
+    "Medicare",
+    "Medicaid"
+  ],
+  "userType": [
+    "Providers",
+    "Patients",
+    "Government"
+  ],
+  "maturityModelTier": 3
+}
